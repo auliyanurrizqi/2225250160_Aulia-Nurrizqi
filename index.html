@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peluang Quest - Matematika SMP Kelas 8</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar" id="main-navbar" style="display: none;">
+    <div class="container nav-wrapper">
+      <div class="brand">
+        <i class="fa-solid fa-dice-d20 brand-icon"></i>
+        <span>Peluang<span class="brand-badge">Quest</span></span>
+      </div>
+      <div class="user-chip">
+        <i class="fa-solid fa-circle-user"></i>
+        <span id="user-greeting">Siswa (Kelas)</span>
+      </div>
+    </div>
+    <div class="container">
+      <nav class="stepper">
+        <button class="step-btn active" onclick="switchTab('pretest')" id="nav-pretest">
+          <i class="fa-solid fa-flag-checkered"></i> 1. Pretest
+        </button>
+        <button class="step-btn" onclick="switchTab('materi')" id="nav-materi">
+          <i class="fa-solid fa-book-open"></i> 2. Materi & Rumus
+        </button>
+        <button class="step-btn" onclick="switchTab('simulasi')" id="nav-simulasi">
+          <i class="fa-solid fa-flask"></i> 3. Lab Simulasi
+        </button>
+        <button class="step-btn" onclick="switchTab('posttest')" id="nav-posttest">
+          <i class="fa-solid fa-trophy"></i> 4. Posttest & Hasil
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ==================== HALAMAN WELCOME ==================== -->
+    <section id="welcome-screen" class="welcome-container">
+      <div class="welcome-card">
+        <div class="welcome-header">
+          <div class="hero-icon"><i class="fa-solid fa-gamepad"></i></div>
+          <h2>Peluang Quest</h2>
+          <p>Petualangan Interaktif Matematika Kelas 8 SMP</p>
+        </div>
+        
+        <div class="form-card">
+          <div class="form-group">
+            <label><i class="fa-solid fa-user"></i> Nama Lengkap Siswa</label>
+            <input type="text" id="input-nama" placeholder="Contoh: Huang Renjun" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-school"></i> Kelas</label>
+            <input type="text" id="input-kelas" placeholder="Contoh: 8A" autocomplete="off">
+          </div>
+
+          <button class="btn-hero" onclick="startApp()">
+            <span>Mulai Petualangan</span> <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 1: PRETEST (PILIHAN GANDA SAJA) ==================== -->
+    <section id="tab-pretest" class="tab-content">
+      <div class="card header-banner banner-purple">
+        <div class="banner-icon"><i class="fa-solid fa-pen-ruler"></i></div>
+        <div>
+          <h2>Tahap 1: Pretest Awal</h2>
+          <p>Jawablah 5 pertanyaan di bawah ini dengan memilih opsi yang paling tepat menurut pemahaman awalmu.</p>
+        </div>
+      </div>
+
+      <div id="pretest-questions-container"></div>
+
+      <div class="action-bar">
+        <button class="btn-action btn-purple" onclick="submitTest('pretest')">
+          <i class="fa-solid fa-paper-plane"></i> Kirim Jawaban Pretest
+        </button>
+      </div>
+
+      <div id="pretest-result-box" class="card result-card hidden"></div>
+    </section>
+
+    <!-- ==================== TAB 2: MATERI & RUMUS ==================== -->
+    <section id="tab-materi" class="tab-content">
+      <div class="card header-banner banner-blue">
+        <div class="banner-icon"><i class="fa-solid fa-lightbulb"></i></div>
+        <div>
+          <h2>Tahap 2: Ensiklopedia Konsep & Rumus</h2>
+          <p>Pahami fondasi utama sebelum melangkah ke simulasi eksperimen.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card concept-card border-emerald">
+          <div class="card-tag tag-emerald"><i class="fa-solid fa-cube"></i> Konsep 1</div>
+          <h3>Ruang Sampel ($S$) & Kejadian ($A$)</h3>
+          <p><strong>Ruang Sampel ($S$)</strong> adalah himpunan semua hasil yang mungkin terjadi dari suatu percobaan acak.</p>
+          <div class="visual-example">
+            <div class="example-item">
+              <i class="fa-solid fa-coins icon-gold"></i>
+              <span>1 Koin: $S = \{\text{Angka}, \text{Gambar}\} \rightarrow n(S) = 2$</span>
+            </div>
+            <div class="example-item">
+              <i class="fa-solid fa-dice icon-indigo"></i>
+              <span>1 Dadu: $S = \{1, 2, 3, 4, 5, 6\} \rightarrow n(S) = 6$</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card concept-card border-indigo">
+          <div class="card-tag tag-indigo"><i class="fa-solid fa-calculator"></i> Konsep 2</div>
+          <h3>Rumus Utama Peluang Teoretik</h3>
+          <p>Peluang kejadian $A$ didefinisikan sebagai rasio anggota kejadian terhadap seluruh ruang sampel:</p>
+          <div class="math-box">
+            $$P(A) = \frac{n(A)}{n(S)}$$
+          </div>
+          <div class="note-box">
+            <i class="fa-solid fa-circle-info"></i> Nilai peluang selalu berada dalam rentang $0 \le P(A) \le 1$.
+          </div>
+        </div>
+
+        <div class="card concept-card border-amber">
+          <div class="card-tag tag-amber"><i class="fa-solid fa-scale-balanced"></i> Konsep 3</div>
+          <h3>Strategi Membandingkan Peluang</h3>
+          <p>Untuk memilih opsi paling menguntungkan, konversikan nilai pecahan ke desimal atau persentase:</p>
+          <div class="compare-demo">
+            <div class="badge-demo demo-a">Permainan A: $\frac{4}{10} = 0,40 \ (40\%)$</div>
+            <div class="badge-demo demo-b">Permainan B: $\frac{5}{15} \approx 0,33 \ (33,3\%)$</div>
+          </div>
+          <p class="mt-1"><i class="fa-solid fa-check-circle color-emerald"></i> Permainan A lebih menguntungkan karena $0,40 > 0,33$.</p>
+        </div>
+
+        <div class="card concept-card border-rose">
+          <div class="card-tag tag-rose"><i class="fa-solid fa-triangle-exclamation"></i> Konsep 4</div>
+          <h3>Miskonsepsi: Peluang vs Kepastian</h3>
+          <p>Nilai peluang <strong>bukan kepastian frekuensi</strong> hasil pada percobaan terbatas, melainkan proyeksi kecenderungan acak.</p>
+          <p class="small-text mt-1">Mengambil 8 kelereng dari kantong berpeluang $\frac{5}{8}$ <strong>tidak menjamin</strong> selalu muncul tepat 5 merah dan 3 kuning!</p>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-action btn-blue" onclick="switchTab('simulasi')">
+          Lanjut ke Lab Simulasi <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: SIMULASI ==================== -->
+    <section id="tab-simulasi" class="tab-content">
+      <div class="card header-banner banner-emerald">
+        <div class="banner-icon"><i class="fa-solid fa-vial"></i></div>
+        <div>
+          <h2>Tahap 3: Laboratorium Simulasi Visual</h2>
+          <p>Buktikan teori matematika dengan eksperimen acak dan visual animasi nyata!</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card sim-card">
+          <h3><i class="fa-solid fa-dice-three color-indigo"></i> Eksperimen Koin & Dadu</h3>
+          
+          <div class="visual-stage">
+            <div class="visual-box">
+              <div id="coin-visual" class="coin-3d">
+                <i class="fa-solid fa-coins"></i>
+              </div>
+              <span id="coin-text">Koin</span>
+            </div>
+            <div class="visual-box">
+              <div id="dice-visual" class="dice-3d">
+                <span>?</span>
+              </div>
+              <span id="dice-text">Dadu</span>
+            </div>
+          </div>
+
+          <div class="btn-group-center">
+            <button class="btn-sim btn-gold" onclick="simulateCoin()"><i class="fa-solid fa-rotate"></i> Lempar Koin</button>
+            <button class="btn-sim btn-indigo" onclick="simulateDice()"><i class="fa-solid fa-dice"></i> Lempar Dadu</button>
+            <button class="btn-sim btn-gray" onclick="resetBasicSim()"><i class="fa-solid fa-trash-can"></i> Reset</button>
+          </div>
+
+          <div id="basic-sim-display" class="sim-log">
+            Klik tombol di atas untuk memulai eksperimen visual.
+          </div>
+          
+          <div id="basic-sim-stats" class="sim-counter-badge">
+            Total Lempar Koin: 0 (Gambar: 0, Angka: 0) | Total Dadu: 0 (Angka > 4: 0)
+          </div>
+        </div>
+
+        <div class="card sim-card">
+          <h3><i class="fa-solid fa-bag-shopping color-rose"></i> Simulasi Kantong Kelereng</h3>
+          <p class="small-text">Isi Kantong: <strong>5 Kelereng Merah</strong> & <strong>3 Kelereng Kuning</strong> ($P(\text{Merah}) = \frac{5}{8}$)</p>
+          
+          <div class="bag-visual-container">
+            <div class="bag-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+            <div class="marble-display-rack" id="marble-rack">
+              <span class="marble m-red"></span><span class="marble m-red"></span><span class="marble m-red"></span><span class="marble m-red"></span><span class="marble m-red"></span>
+              <span class="marble m-yellow"></span><span class="marble m-yellow"></span><span class="marble m-yellow"></span>
+            </div>
+          </div>
+
+          <div class="btn-group-center">
+            <button class="btn-sim btn-rose" onclick="simulateMarbles8x()"><i class="fa-solid fa-hand-holding-hand"></i> Ambil 8x Sekaligus</button>
+            <button class="btn-sim btn-gray" onclick="resetMarbleSim()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+          </div>
+
+          <div id="marble-sim-display" class="sim-log">
+            Klik tombol di atas untuk membuktikan kepastian hasil 8x pengambilan kelereng!
+          </div>
+        </div>
+      </div>
+
+      <div class="card sim-card mt-2">
+        <h3><i class="fa-solid fa-calculator color-amber"></i> Kalkulator Pembanding Dua Permainan</h3>
+        <p class="small-text">Bandingkan dua kotak permainan undian hadiah secara otomatis.</p>
+        
+        <div class="grid-2 mt-1">
+          <div class="calc-box calc-box-a">
+            <h4><i class="fa-solid fa-box-archive"></i> Permainan A</h4>
+            <div class="input-row">
+              <label>Bola Merah (Menang):</label>
+              <input type="number" id="gameA-win" value="4" min="0">
+            </div>
+            <div class="input-row">
+              <label>Bola Biru (Lainnya):</label>
+              <input type="number" id="gameA-lose" value="6" min="0">
+            </div>
+          </div>
+
+          <div class="calc-box calc-box-b">
+            <h4><i class="fa-solid fa-box-archive"></i> Permainan B</h4>
+            <div class="input-row">
+              <label>Bola Merah (Menang):</label>
+              <input type="number" id="gameB-win" value="5" min="0">
+            </div>
+            <div class="input-row">
+              <label>Bola Biru (Lainnya):</label>
+              <input type="number" id="gameB-lose" value="10" min="0">
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-sim btn-amber btn-full mt-1" onclick="compareGames()">
+          <i class="fa-solid fa-chart-simple"></i> Hitung & Bandingkan Peluang Keputusan
+        </button>
+
+        <div id="compare-result" class="sim-log mt-1 hidden"></div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-action btn-emerald" onclick="switchTab('posttest')">
+          Lanjut ke Posttest Akhir <i class="fa-solid fa-trophy"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: POSTTEST (DENGAN TAHAPAN) ==================== -->
+    <section id="tab-posttest" class="tab-content">
+      <div class="card header-banner banner-gold">
+        <div class="banner-icon"><i class="fa-solid fa-award"></i></div>
+        <div>
+          <h2>Tahap 4: Posttest & Rekap Evaluasi</h2>
+          <p>Uji kembali pemahamanmu menggunakan tahapan lengkap untuk melihat skor akhir dan analisis N-Gain.</p>
+        </div>
+      </div>
+
+      <div id="posttest-questions-container"></div>
+
+      <div class="action-bar">
+        <button class="btn-action btn-gold" onclick="submitTest('posttest')">
+          <i class="fa-solid fa-check-double"></i> Selesai & Tampilkan Laporan Hasil
+        </button>
+      </div>
+
+      <div id="final-recap-box" class="card result-card hidden"></div>
+    </section>
+
+  </main>
+
+  <script src="js/questions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
