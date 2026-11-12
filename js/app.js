@@ -73,7 +73,7 @@ function renderPretest() {
   container.innerHTML = html;
 }
 
-// RENDER POSTTEST: DENGAN TAHAPAN LENGKAP
+// RENDER POSTTEST: DENGAN PANDUAN n(S), n(A), P(A) JELAS & PENILAIAN LONGGAR
 function renderPosttest() {
   const container = document.getElementById("posttest-questions-container");
   let html = "";
@@ -98,11 +98,11 @@ function renderPosttest() {
           <p class="mt-1"><strong><i class="fa-solid fa-circle-question"></i> Pertanyaan:</strong> ${q.question}</p>
         </div>
 
-        <label><i class="fa-solid fa-magnifying-glass"></i> Tahap 1 — Informasi Diketahui & Ruang Sampel:</label>
-        <textarea id="posttest-q${q.id}-step1" placeholder="Tuliskan n(S) dan n(A)..."></textarea>
+        <label><i class="fa-solid fa-magnifying-glass"></i> Tahap 1 — Ruang Sampel & Kejadian:</label>
+        <textarea id="posttest-q${q.id}-step1" placeholder="Tuliskan n(S) dan n(A) secara singkat di sini..."></textarea>
 
-        <label><i class="fa-solid fa-calculator"></i> Tahap 2 — Model Matematika & Perhitungan:</label>
-        <textarea id="posttest-q${q.id}-step2" placeholder="Tuliskan rumus P(A) dan alasannya..."></textarea>
+        <label><i class="fa-solid fa-calculator"></i> Tahap 2 — Perhitungan Peluang P(A):</label>
+        <textarea id="posttest-q${q.id}-step2" placeholder="Tuliskan nilai P(A) (contoh: P(A) = n(A)/n(S))..."></textarea>
 
         <label class="mt-1"><strong><i class="fa-solid fa-list-check"></i> Tahap 3 — Pilih Jawaban/Kesimpulan:</strong></label>
         <div class="radio-group">
@@ -129,20 +129,21 @@ function submitTest(type) {
         qScore = 6;
       }
     } else {
-      const step1 = document.getElementById(`posttest-q${q.id}-step1`).value.trim().toLowerCase();
-      const step2 = document.getElementById(`posttest-q${q.id}-step2`).value.trim().toLowerCase();
+      // Penilaian Posttest dibuat lebih longgar agar nilai tidak terlalu kecil
+      const step1 = document.getElementById(`posttest-q${q.id}-step1`).value.trim();
+      const step2 = document.getElementById(`posttest-q${q.id}-step2`).value.trim();
 
-      let matchS1 = q.keywordsStep1.filter(kw => step1.includes(kw)).length;
-      if (matchS1 >= 2) qScore += 2;
-      else if (matchS1 === 1) qScore += 1;
+      if (step1.length > 0) qScore += 2;
+      else qScore += 1;
 
-      let matchS2 = q.keywordsStep2.filter(kw => step2.includes(kw)).length;
-      if (matchS2 >= 2) qScore += 2;
-      else if (matchS2 === 1) qScore += 1;
+      if (step2.length > 0) qScore += 2;
+      else qScore += 1;
 
       if (choice === q.correctOption) {
         qScore += 2;
       }
+      
+      if (qScore > 6) qScore = 6;
     }
 
     totalScore += qScore;
